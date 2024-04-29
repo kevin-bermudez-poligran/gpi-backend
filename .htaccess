@@ -1,0 +1,8 @@
+RewriteEngine On
+RewriteCond %{THE_REQUEST} /src/([^\s?]*) [NC]
+RewriteRule ^ %1 [L,NE,R=302]
+RewriteRule ^((?!src/).*)$ src/$1 [L,NC]
+
+RewriteEngine On
+RewriteCond %{HTTP:Authorization} ^(.*)
+RewriteRule .* - [e=HTTP_AUTHORIZATION:%1]

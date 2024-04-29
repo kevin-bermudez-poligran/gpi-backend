@@ -1,0 +1,29 @@
+version: "3"
+
+services:
+    database_gpi_poligran:
+        image: mysql:5.6.41
+        restart: always
+        container_name: container-database_gpi_poligran
+        environment:
+            MYSQL_DATABASE: ${DB_NAME}
+            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+        ports:
+            - "${PUBLIC_DB_PORT}:3306"
+    apache-php_gpi_poligran:
+        build:
+            context: .
+            dockerfile: Dockerfile
+            args:
+                CURRENT_IP_FOR_XDEBUG: ${CURRENT_IP_FOR_XDEBUG}
+        container_name: container-php-gpi_poligran
+        depends_on:
+            - database_gpi_poligran
+        ports:
+            - "${PHP_PORT}:80"
+        volumes:
+            - .:/var/www/html
+networks:
+    default:
+        external:
+            name: backend_gpi_poligran
