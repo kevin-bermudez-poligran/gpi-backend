@@ -59,8 +59,10 @@ class ManageUploadFile{
         //     $file->getSize(),
         //     $fileDimensions
         // );
-
+        
         $file->upload();
+
+        return $fileNameSlugify;
 
         // return $uploadedFileData;
     }

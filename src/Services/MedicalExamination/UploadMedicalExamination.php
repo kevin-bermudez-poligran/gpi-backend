@@ -16,13 +16,13 @@
 
         public function register(){
             try{
-                $this->manageUploadFile::upload(
+                $name = $this->manageUploadFile::upload(
                     'image',
                     'result-examinations/' . $this->user
                 );
                 
                 $resultExamination = new MedicalExamination();
-                $resultExamination->url = 'result-examinations/' . $this->user;
+                $resultExamination->url = 'result-examinations/' . $this->user . '/' . $name;
                 $resultExamination->user = $this->user;
                 $resultExamination->save();
 
