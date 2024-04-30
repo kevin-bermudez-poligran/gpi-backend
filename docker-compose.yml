@@ -23,6 +23,7 @@ services:
             - "${PHP_PORT}:80"
         volumes:
             - .:/var/www/html
+            - ./uploads:/var/www/uploads
 networks:
     default:
         external:

@@ -16,7 +16,12 @@ final class GetMedicalOrder{
     public function register(){
         $order = MedicalOrder::where('id',$this->order);
      
-        $order = $order->get()
+        $order = $order
+                    ->with('specialistData',function($q){
+                        $q->with('specialistData');
+                    })
+                    ->with('userData')
+                    ->get()
                     ->toArray();        
         
         return count($order) ? $order[0] : null;
