@@ -6,17 +6,17 @@ use GpiPoligran\Exceptions\Service as ServiceError;
 use GpiPoligran\Models\SpecialistSchedule;
 use GpiPoligran\Services\SpecialistSchedule\GetSpecialistSchedule;
 
-final class CreateSpecialistSchedule{
-    private int $specialist;
+final class EditSpecialistSchedule{
+    private int $specialistSchedule;
     private string $startDate;
     private string $endDate;
 
     public function __construct(
-        int $specialist,
+        int $specialistSchedule,
         string $startDate,
         string $endDate
     ){
-        $this->specialist = $specialist;
+        $this->specialistSchedule = $specialistSchedule;
         $this->startDate = $startDate;
         $this->endDate = $endDate;
     }
@@ -28,22 +28,22 @@ final class CreateSpecialistSchedule{
             }
 
             $service = new GetSpecialistSchedule(
-                $this->specialist,
-                $this->startDate
+                0,
+                $this->startDate,
+                $this->specialistSchedule
             );
 
             if( $service->register() ){
                 throw new ServiceError( [],'This schedule has already been used',400 );
             }
-    
-            $specialistSchedule = new SpecialistSchedule();
-            $specialistSchedule->specialist = $this->specialist;
-            $specialistSchedule->start_date = $this->startDate;
-            $specialistSchedule->end_date = $this->endDate;
-    
-            $specialistSchedule->save();
-    
-            return $specialistSchedule->id;
+            
+            SpecialistSchedule::find($this->specialistSchedule)
+                                ->update([
+                                    'start_date' => $this->startDate,
+                                    'end_date' => $this->endDate
+                                ]);
+            
+            return true;
         }
         catch(\Exception $error){
             if($error instanceof ServiceError){

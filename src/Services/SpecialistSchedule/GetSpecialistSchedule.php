@@ -6,23 +6,32 @@ use GpiPoligran\Models\SpecialistSchedule;
 final class GetSpecialistSchedule{
     private int $specialist;
     private string $startDate;
-    private string $endDate;
+    private int $id;
 
     public function __construct(
-        int $specialist,
-        string $startDate,
-        string $endDate
+        int $specialist = 0,
+        string $startDate = '',
+        int $id = 0
     )
     {
        $this->specialist = $specialist; 
        $this->startDate = $startDate;
-       $this->endDate = $endDate;
+       $this->id = $id;
     }
 
     public function register(){
-        $specialistSchedule = SpecialistSchedule::where('specialist',$this->specialist)
-                                    ->where('start_date','<=',$this->startDate)
-                                    ->where('end_date','>=',$this->startDate);
+        if($this->id){
+            $specialistSchedule = SpecialistSchedule::where('id','!=',$this->id);
+        }
+        else{
+            $specialistSchedule = SpecialistSchedule::where('specialist',$this->specialist);
+        }
+                                    
+        if(strlen($this->startDate)){
+            $specialistSchedule = $specialistSchedule->where('start_date','<=',$this->startDate)
+                                                    ->where('end_date','>=',$this->startDate);
+        }
+        
      
         $specialistSchedule = $specialistSchedule->get()
                     ->toArray();        

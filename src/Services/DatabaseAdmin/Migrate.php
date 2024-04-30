@@ -1,6 +1,8 @@
 <?php
 
 namespace GpiPoligran\Services\DatabaseAdmin;
+
+use GpiPoligran\Config\MedicalOrderStatusEnum;
 use GpiPoligran\Config\ProfilesEnum;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Illuminate\Database\Capsule\Manager as DB;
@@ -16,6 +18,7 @@ final class Migrate{
             $this->createSpecialistsTable();
             $this->createSpecialtiesTable();
             $this->createSpecialistSchedulesTable();
+            $this->createMedicalOrderTable();
         }
         catch(\Exception $error){
             throw new ServiceError([],'Can`t migrate database',500);
@@ -70,6 +73,21 @@ final class Migrate{
                 $table->string('password',255);
                 $table->integer('profile')->default( ProfilesEnum::PATIENT );
                 $table->integer('identification_number')->nullable();
+               
+                $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+                $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+            });
+        }
+    }
+
+    private function createMedicalOrderTable(){
+        if (!Capsule::schema()->hasTable('medical_orders')) {
+            Capsule::schema()->create('medical_orders',function($table){
+                $table->increments('id');
+                $table->integer('specialist');
+                $table->integer('user');
+                $table->text('description')->nullable();
+                $table->integer('status')->default( MedicalOrderStatusEnum::PENDING );
                
                 $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
                 $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP'));
