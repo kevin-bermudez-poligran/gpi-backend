@@ -6,13 +6,14 @@ use GpiPoligran\Exceptions\Service as ServiceError;
 use GpiPoligran\Utils\ManageHashingText;
 use GpiPoligran\Utils\ManageJWT;
 use GpiPoligran\Utils\ManageCrypt;
+use GpiPoligran\Services\Users\GetUser;
 
 final class CreateToken {
-    private string $user;
+    private $user;
     private string $password;
 
     public function __construct(
-        string $user,
+        $user,
         string $password
     )
     {
@@ -26,15 +27,12 @@ final class CreateToken {
 
     public function register(){
        try{
-            $userQuery = User::where('email',$this->user)
-                    ->get()
-                    ->toArray();
+            $userService = new GetUser( $this->user );
+            $user = $userService->register();
 
-            if(!$userQuery){
+            if(!$user){
                 $this->launchErrorUserNotFound();
             }
-
-            $user = $userQuery[0];
 
             if(!ManageHashingText::verifyHash($this->password,$user['password'])){
                 $this->launchErrorUserNotFound();
@@ -57,11 +55,12 @@ final class CreateToken {
             return $token;
        }
         catch(\Exception $error){
+            // print_r($error);
             if($error instanceof ServiceError){
                 throw $error;
             }
 
-            throw new ServiceError([],'Can`t install system',500);
+            throw new ServiceError([],'Can`t login user',500);
         }
     }
 }

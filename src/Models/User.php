@@ -8,7 +8,8 @@
             'name',
             'email',
             'password',
-            'profile'
+            'profile',
+            'identification_number'
         ];
         public $incrementing = true;
         protected $primaryKey = 'id';
