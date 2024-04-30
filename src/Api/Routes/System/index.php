@@ -1,7 +1,8 @@
 <?php
     use GpiPoligran\Api\Routes\System\{
         Healtcheck,
-        Install
+        Install,
+        Migrate
     };
     use GpiPoligran\Config\Constants;
 
@@ -14,5 +15,10 @@
 
     $router->post("$prefix/install", function($req,$res){
         $routeHandler = new Install( $req,$res );
+        return $routeHandler->run();
+    });
+
+    $router->get("$prefix/migrate-db", function($req,$res){
+        $routeHandler = new Migrate( $req,$res );
         return $routeHandler->run();
     });

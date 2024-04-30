@@ -15,9 +15,24 @@ final class Migrate{
             $this->createUsersTable();
             $this->createSpecialistsTable();
             $this->createSpecialtiesTable();
+            $this->createSpecialistSchedulesTable();
         }
         catch(\Exception $error){
             throw new ServiceError([],'Can`t migrate database',500);
+        }
+    }
+
+    private function createSpecialistSchedulesTable(){
+        if (!Capsule::schema()->hasTable('specialist_schedules')) {
+            Capsule::schema()->create('specialist_schedules',function($table){
+                $table->increments('id');
+                $table->date('start_date');
+                $table->date('end_date');
+                $table->integer('specialist');
+               
+                $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+                $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+            });
         }
     }
     
