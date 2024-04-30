@@ -40,7 +40,7 @@
                 ]);
             }
             catch(\Exception $error){
-                return RouteBase::handlerException($this->response,$error);
+                return RouteBase::handlerException( $error );
             }
         }
     }

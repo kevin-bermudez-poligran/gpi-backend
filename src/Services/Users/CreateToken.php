@@ -21,7 +21,7 @@ final class CreateToken {
     }
 
     private function launchErrorUserNotFound(){
-        throw new ServiceError([],'User not found',401);
+        throw new ServiceError([],'User not found',400);
     }
 
     public function register(){
@@ -31,13 +31,13 @@ final class CreateToken {
                     ->toArray();
 
             if(!$userQuery){
-            $this->launchErrorUserNotFound();
+                $this->launchErrorUserNotFound();
             }
 
             $user = $userQuery[0];
 
             if(!ManageHashingText::verifyHash($this->password,$user['password'])){
-            $this->launchErrorUserNotFound();
+                $this->launchErrorUserNotFound();
             }
 
             $token = ManageJWT::create(array(
