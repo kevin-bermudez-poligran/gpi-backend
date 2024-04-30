@@ -1,17 +1,21 @@
 <?php
     namespace GpiPoligran\Api\Routes;
-    // use CommunityFutbolExceptions\Service as ServiceError;
-    // use CommunityFutbolExceptions\InternalCodeError;
+    use GpiPoligran\Utils\Validator;
+    use GpiPoligran\Exceptions\Service as ServiceError;
+    use GpiPoligran\Exceptions\InternalCodeError;
 
     class RouteBase {
         protected $request;
         protected $response;
+        protected $validator;
 
         public function __construct($request,$response){
             $this->request  = $request;
             $this->response = $response;
+            $this->validator = new Validator;
         }
-        protected static function sendResponse($response,int $code,string $message,array $data = [],array $errors = []){
+
+        protected function sendResponse(int $code,string $message,array $data = [],array $errors = [],InternalCodeError $internalCodeError = null){
             $jsonResponse = array(
                 'success' => $code < 300,
                 'message' => $message
@@ -25,30 +29,30 @@
                 $jsonResponse['errors'] = $errors;
             }
 
-            // if($internalCodeError){
-            //     $jsonResponse['internal_code'] = $internalCodeError;
-            // }
+            if($internalCodeError){
+                $jsonResponse['internal_code'] = $internalCodeError;
+            }
      
-            $response->status($code)->json($jsonResponse);
+            $this->response->status($code)->json($jsonResponse);
             exit();
         }
 
-        protected static function handlerException($response,$error){
+        protected function handlerException($error){
             $errorStatus  = 500;
             $messageError = 'Internal Server Error';
             $errors       = [];
             $internalCodeError = null;
 
-            // if($error instanceof ServiceError){
-            //     $errorStatus  = $error->status ? $error->status : 400;
-            //     $messageError = $error->publicMessage ? $error->publicMessage : 'The information provided has errors';
-            //     $errors       = $error->getErrors();
+            if($error instanceof ServiceError){
+                $errorStatus  = $error->status ? $error->status : 400;
+                $messageError = $error->publicMessage ? $error->publicMessage : 'The information provided has errors';
+                $errors       = $error->getErrors();
 
-            //     if(isset($error->internalCode)){
-            //         $internalCodeError = $error->internalCode;
-            //     }
-            // }
+                if(isset($error->internalCode)){
+                    $internalCodeError = $error->internalCode;
+                }
+            }
 
-            return self:: sendResponse($response,$errorStatus,$messageError,[],$errors,$internalCodeError);
+            return self:: sendResponse($errorStatus,$messageError,[],$errors,$internalCodeError);
         }
     }

@@ -8,6 +8,11 @@
         }
 
         public function run(){
-            return RouteBase::sendResponse( $this->response,200,'Api GPI Poligran OK' );    
+            try{
+                return $this->sendResponse( 200,'Api GPI Poligran OK' );    
+            }
+            catch(\Exception $error){
+                return $this->handlerException( $error );
+            }
         }
     }
