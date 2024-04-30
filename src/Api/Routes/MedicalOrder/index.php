@@ -1,6 +1,7 @@
 <?php
     use GpiPoligran\Api\Routes\MedicalOrder\{
-        CreateMedicalOrder
+        CreateMedicalOrder,
+        GetMedicalOrders
     };
     use GpiPoligran\Config\Constants;
 
@@ -8,5 +9,10 @@
 
     $router->post("$prefix", function($req,$res){
         $routeHandler = new CreateMedicalOrder( $req,$res );
+        return $routeHandler->run();
+    });
+
+    $router->get("$prefix", function($req,$res){
+        $routeHandler = new GetMedicalOrders( $req,$res );
         return $routeHandler->run();
     });
