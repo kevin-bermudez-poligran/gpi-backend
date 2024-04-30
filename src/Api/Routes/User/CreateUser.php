@@ -17,10 +17,8 @@
             
             $result = $this->validator->validate([
                 'name'     => $this->request->body->name,
-                'userName' => $this->request->body->userName,
                 'email'    => $this->request->body->email,
-                'password' => $this->request->body->password,
-                'userType' => $this->request->body->userType
+                'password' => $this->request->body->password
             ]);
             
             return $result;
