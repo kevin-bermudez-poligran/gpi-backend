@@ -1,6 +1,7 @@
 <?php
     use GpiPoligran\Api\Routes\ClinicHistory\{
-        GetClinicHistory
+        GetClinicHistory,
+        GetClinicHistoryFile
     };
     use GpiPoligran\Config\Constants;
 
@@ -8,5 +9,10 @@
 
     $router->get("$prefix", function($req,$res){
         $routeHandler = new GetClinicHistory( $req,$res );
+        return $routeHandler->run();
+    });
+
+    $router->get("$prefix/file", function($req,$res){
+        $routeHandler = new GetClinicHistoryFile( $req,$res );
         return $routeHandler->run();
     });
