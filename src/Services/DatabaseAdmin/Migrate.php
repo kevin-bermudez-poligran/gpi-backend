@@ -6,6 +6,7 @@ use GpiPoligran\Config\MedicalAppointmentStatusEnum;
 use GpiPoligran\Config\MedicalOrderStatusEnum;
 use GpiPoligran\Config\ProfilesEnum;
 use GpiPoligran\Config\SpecialistScheduleStatusEnum;
+use GpiPoligran\Config\SpecialistStatusEnum;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Illuminate\Database\Capsule\Manager as DB;
 use GpiPoligran\Exceptions\{
@@ -49,6 +50,7 @@ final class Migrate{
                 $table->increments('id');
                 $table->integer('specialist');
                 $table->integer('specialty');
+                $table->integer('status')->default( SpecialistStatusEnum::CREATED );
                
                 $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
                 $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP'));

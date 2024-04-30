@@ -4,7 +4,8 @@
         CreateSuperAdmin,
         CreateManager,
         CreatePatient,
-        CreateSpecialist
+        CreateSpecialist,
+        DeleteSpecialist
     };
     use GpiPoligran\Config\Constants;
 
@@ -32,5 +33,10 @@
 
     $router->post("$prefix/specialist", function($req,$res){
         $routeHandler = new CreateSpecialist( $req,$res );
+        return $routeHandler->run();
+    });
+
+    $router->delete("$prefix/specialist/:user", function($req,$res){
+        $routeHandler = new DeleteSpecialist( $req,$res );
         return $routeHandler->run();
     });

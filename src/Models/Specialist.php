@@ -10,7 +10,8 @@
         protected $table = 'specialists';
         protected $fillable = [
             'specialist',
-            'specialty'
+            'specialty',
+            'status'
         ];
         public $incrementing = true;
         protected $primaryKey = 'id';
