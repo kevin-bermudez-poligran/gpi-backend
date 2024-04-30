@@ -8,58 +8,52 @@ use GpiPoligran\Models\{
     MedicalAppointment,
     SpecialistSchedule
 };
-use GpiPoligran\Services\MedicalOrder\GetMedicalOrder;
 use GpiPoligran\Services\SpecialistSchedule\GetSpecialistScheduleByStatus;
-use GpiPoligran\Services\MedicalAppointment\GetMedicalAppointmentByOrder;
+use GpiPoligran\Services\MedicalAppointment\GetMedicalAppointmentById;
 
-final class CreateMedicalAppointment{
-    private int $order;
+final class EditMedicalAppointment{
+    private int $medicalAppointment;
     private int $schedule;
 
     public function __construct(
-        int $order,
+        int $medicalAppointment,
         int $schedule
     )
     {
-        $this->order = $order;
+        $this->medicalAppointment = $medicalAppointment;
         $this->schedule = $schedule;
     }
 
     public function register(){
         try{
-            $serviceMedicalOrder = new GetMedicalOrder( $this->order );
-
-            if( !$serviceMedicalOrder->register() ){
-                throw new ServiceError( [],'Medical order not found',400 );
-            }
-
             $specialistScheduleService = new GetSpecialistScheduleByStatus( $this->schedule,SpecialistScheduleStatusEnum::AVAILABLE );
 
             if( !$specialistScheduleService->register() ){
                 throw new ServiceError( [],'Specialist schedule is not available',400 );
             }
 
-            $getMedicalAppointmentService = new GetMedicalAppointmentByOrder( $this->order );
+            $getMedicalAppointmentService = new GetMedicalAppointmentById( $this->medicalAppointment );
+            $data = $getMedicalAppointmentService->register();
 
-            if( $getMedicalAppointmentService->register() ){
-                throw new ServiceError( [],'Order has been already scheduled',400 );
+            if(!$data){
+                throw new ServiceError( [],'Medical appointment not found',400 );
             }
 
-            $order = new MedicalAppointment();
-            $order->order = $this->order;
-            $order->schedule = $this->schedule;
-            $order->save();
+            SpecialistSchedule::where('id',$data['schedule'])->update(['status' => SpecialistScheduleStatusEnum::AVAILABLE]);
+            
+            MedicalAppointment::where('id',$this->medicalAppointment)
+            ->update(['schedule' => $this->schedule]);
             
             SpecialistSchedule::where('id',$this->schedule)->update(['status' => SpecialistScheduleStatusEnum::USED]);
-
-            return $order->id;
+            
+            return true;
         }
         catch(\Exception $error){
             if($error instanceof ServiceError){
                 throw $error;
             }
 
-            throw new ServiceError([],'Can`t create medical appointment',500);
+            throw new ServiceError([],'Can`t update medical appointment',500);
         }
     }
 }
