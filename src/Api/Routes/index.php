@@ -8,6 +8,7 @@
     require_once __DIR__ . '/System/index.php';
     require_once __DIR__ . '/User/index.php';
     require_once __DIR__ . '/Specialty/index.php';
+    require_once __DIR__ . '/SpecialistSchedule/index.php';
 
     header('Access-Control-Allow-Origin: *');
     header("Access-Control-Allow-Headers: X-API-KEY, PUBLIC-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method, Authorization, authorization");

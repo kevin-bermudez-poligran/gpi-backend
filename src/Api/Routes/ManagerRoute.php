@@ -3,7 +3,7 @@
     use GpiPoligran\Api\Routes\RoutePrivate;
     use GpiPoligran\Config\ProfilesEnum;
 
-    class SuperAdminRoute extends RoutePrivate {
+    class ManagerRoute extends RoutePrivate {
         protected $dataToken;
         protected $decryptDataToken;
 

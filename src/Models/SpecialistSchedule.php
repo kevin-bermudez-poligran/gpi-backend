@@ -7,7 +7,7 @@
         protected $fillable = [
             'start_date',
             'end_date',
-            'especialist'
+            'specialist'
         ];
         public $incrementing = true;
         protected $primaryKey = 'id';

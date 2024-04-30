@@ -26,8 +26,8 @@ final class Migrate{
         if (!Capsule::schema()->hasTable('specialist_schedules')) {
             Capsule::schema()->create('specialist_schedules',function($table){
                 $table->increments('id');
-                $table->date('start_date');
-                $table->date('end_date');
+                $table->dateTime('start_date');
+                $table->dateTime('end_date');
                 $table->integer('specialist');
                
                 $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
