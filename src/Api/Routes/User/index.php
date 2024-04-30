@@ -3,7 +3,8 @@
         CreateToken,
         CreateSuperAdmin,
         CreateManager,
-        CreatePatient
+        CreatePatient,
+        CreateSpecialist
     };
     use GpiPoligran\Config\Constants;
 
@@ -26,5 +27,10 @@
 
     $router->post("$prefix/patient", function($req,$res){
         $routeHandler = new CreatePatient( $req,$res );
+        return $routeHandler->run();
+    });
+
+    $router->post("$prefix/specialist", function($req,$res){
+        $routeHandler = new CreateSpecialist( $req,$res );
         return $routeHandler->run();
     });

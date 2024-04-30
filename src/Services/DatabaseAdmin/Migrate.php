@@ -13,9 +13,36 @@ final class Migrate{
     public function register(){
         try{
             $this->createUsersTable();
+            $this->createSpecialistsTable();
+            $this->createSpecialtiesTable();
         }
         catch(\Exception $error){
             throw new ServiceError([],'Can`t migrate database',500);
+        }
+    }
+    
+    private function createSpecialistsTable(){
+        if (!Capsule::schema()->hasTable('specialists')) {
+            Capsule::schema()->create('specialists',function($table){
+                $table->increments('id');
+                $table->integer('specialist');
+                $table->integer('specialty');
+               
+                $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+                $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+            });
+        }
+    }
+
+    private function createSpecialtiesTable(){
+        if (!Capsule::schema()->hasTable('specialties')) {
+            Capsule::schema()->create('specialties',function($table){
+                $table->increments('id');
+                $table->string('name',255);
+               
+                $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+                $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+            });
         }
     }
 
