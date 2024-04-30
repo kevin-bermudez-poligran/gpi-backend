@@ -3,7 +3,8 @@
     use Illuminate\Database\Eloquent\Model;
     use GpiPoligran\Models\{
         Specialist,
-        User
+        User,
+        MedicalAppointment
     };
 
     class MedicalOrder extends Model {
@@ -26,5 +27,10 @@
         public function userData()
         {
             return $this->hasOne(User::class,'id','user');
+        }
+
+        public function medicalAppointment()
+        {
+            return $this->hasOne(MedicalAppointment::class,'order','id');
         }
     }

@@ -21,6 +21,9 @@ final class GetMedicalOrdersByUser{
             $orders = $ordersQuery
                         ->with('specialistData')
                         ->with('userData')
+                        ->with('medicalAppointment',function($q){
+                            $q->with('scheduleData');
+                        })
                         ->get()
                         ->toArray();        
             
