@@ -3,6 +3,7 @@
     use GpiPoligran\Api\Routes\RouteBase;
     use GpiPoligran\Utils\ManageJWT;
     use GpiPoligran\Utils\ManageCrypt;
+    use GpiPoligran\Services\Users\GetInfoFromToken;
 
     class RoutePrivate extends RouteBase {
         private $rawToken;
@@ -37,32 +38,16 @@
         }
 
         private function setCurrentUserData(
-            $profile,
-            $userProfileId,
-            $userId,
-            $userType,
-            $isExternalIntegration = false
+           $data
         ){
-            $this->currentUserData = [
-                'profile' => $profile,
-                'user' => $userProfileId,
-                'user_id' => $userId,
-                'user_type' => $userType,
-                'is_external_integration' => $isExternalIntegration
-            ];
+            $this->currentUserData = $data;
         }
 
         private function getDataToken(){
             try{
-                $tokenDecode = ManageJWT::decode($this->rawToken);
-                $tokenDecode['data']->auth = ManageCrypt::decrypt($tokenDecode['data']->auth);
+                $service = new GetInfoFromToken( $this->rawToken );
 
-                $this->setCurrentUserData(
-                    $tokenDecode['data']->auth['profile'],
-                    $tokenDecode['data']->auth['user'],
-                    $tokenDecode['data']->auth['user_id'],
-                    $tokenDecode['data']->auth['user_type']
-                );
+                $this->setCurrentUserData( $service->register() );
             }
             catch(\Exception $error){
                 $this->sendResponse( 401,'Unauthorized' );

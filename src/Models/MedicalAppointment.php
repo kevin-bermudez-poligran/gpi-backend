@@ -2,12 +2,11 @@
     namespace GpiPoligran\Models;
     use Illuminate\Database\Eloquent\Model;
 
-    class SpecialistSchedule extends Model {
-        protected $table = 'specialist_schedules';
+    class MedicalAppointment extends Model {
+        protected $table = 'medical_appointments';
         protected $fillable = [
-            'start_date',
-            'end_date',
-            'specialist',
+            'order',
+            'schedule',
             'status'
         ];
         public $incrementing = true;

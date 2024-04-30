@@ -2,8 +2,10 @@
 
 namespace GpiPoligran\Services\DatabaseAdmin;
 
+use GpiPoligran\Config\MedicalAppointmentStatusEnum;
 use GpiPoligran\Config\MedicalOrderStatusEnum;
 use GpiPoligran\Config\ProfilesEnum;
+use GpiPoligran\Config\SpecialistScheduleStatusEnum;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Illuminate\Database\Capsule\Manager as DB;
 use GpiPoligran\Exceptions\{
@@ -19,6 +21,7 @@ final class Migrate{
             $this->createSpecialtiesTable();
             $this->createSpecialistSchedulesTable();
             $this->createMedicalOrderTable();
+            $this->createMedicalAppointmentTable();
         }
         catch(\Exception $error){
             throw new ServiceError([],'Can`t migrate database',500);
@@ -32,6 +35,7 @@ final class Migrate{
                 $table->dateTime('start_date');
                 $table->dateTime('end_date');
                 $table->integer('specialist');
+                $table->integer('status')->default( SpecialistScheduleStatusEnum::AVAILABLE );
                
                 $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
                 $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP'));
@@ -88,6 +92,20 @@ final class Migrate{
                 $table->integer('user');
                 $table->text('description')->nullable();
                 $table->integer('status')->default( MedicalOrderStatusEnum::PENDING );
+               
+                $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+                $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+            });
+        }
+    }
+
+    private function createMedicalAppointmentTable(){
+        if (!Capsule::schema()->hasTable('medical_appointments')) {
+            Capsule::schema()->create('medical_appointments',function($table){
+                $table->increments('id');
+                $table->integer('order');
+                $table->integer('schedule');
+                $table->integer('status')->default( MedicalAppointmentStatusEnum::SCHEDULED );
                
                 $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
                 $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP'));
