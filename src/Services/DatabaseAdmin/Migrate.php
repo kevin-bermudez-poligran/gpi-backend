@@ -23,6 +23,7 @@ final class Migrate{
             $this->createSpecialistSchedulesTable();
             $this->createMedicalOrderTable();
             $this->createMedicalAppointmentTable();
+            $this->createMedicalExaminationResultsTable();
         }
         catch(\Exception $error){
             throw new ServiceError([],'Can`t migrate database',500);
@@ -108,6 +109,19 @@ final class Migrate{
                 $table->integer('order');
                 $table->integer('schedule');
                 $table->integer('status')->default( MedicalAppointmentStatusEnum::SCHEDULED );
+               
+                $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+                $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+            });
+        }
+    }
+
+    private function createMedicalExaminationResultsTable(){
+        if (!Capsule::schema()->hasTable('medical_examination_results')) {
+            Capsule::schema()->create('medical_examination_results',function($table){
+                $table->increments('id');
+                $table->string('url',255);
+                $table->integer('user');
                
                 $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
                 $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP'));

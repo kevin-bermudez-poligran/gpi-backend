@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a29b31a282d150c13ef887e096a00557",
+    "content-hash": "d41ffd7cf0eb2228a83868a577979362",
     "packages": [
         {
             "name": "aeberdinelli/express-php",
@@ -118,80 +118,6 @@
                 }
             ],
             "time": "2023-12-11T17:09:12+00:00"
-        },
-        {
-            "name": "cocur/slugify",
-            "version": "v4.5.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/cocur/slugify.git",
-                "reference": "af8e6ee771458bf885f7457807b5ff9bad8743cb"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/cocur/slugify/zipball/af8e6ee771458bf885f7457807b5ff9bad8743cb",
-                "reference": "af8e6ee771458bf885f7457807b5ff9bad8743cb",
-                "shasum": ""
-            },
-            "require": {
-                "ext-mbstring": "*",
-                "php": "^7.1 || ~8.0.0 || ~8.1.0 || ~8.2.0"
-            },
-            "conflict": {
-                "symfony/config": "<3.4 || >=4,<4.3",
-                "symfony/dependency-injection": "<3.4 || >=4,<4.3",
-                "symfony/http-kernel": "<3.4 || >=4,<4.3",
-                "twig/twig": "<2.12.1"
-            },
-            "require-dev": {
-                "laravel/framework": "^5.0|^6.0|^7.0|^8.0",
-                "latte/latte": "~2.2",
-                "league/container": "^2.2.0",
-                "mikey179/vfsstream": "~1.6.8",
-                "mockery/mockery": "^1.3",
-                "nette/di": "~2.4",
-                "pimple/pimple": "~1.1",
-                "plumphp/plum": "~0.1",
-                "symfony/config": "^3.4 || ^4.3 || ^5.0 || ^6.0",
-                "symfony/dependency-injection": "^3.4 || ^4.3 || ^5.0 || ^6.0",
-                "symfony/http-kernel": "^3.4 || ^4.3 || ^5.0 || ^6.0",
-                "symfony/phpunit-bridge": "^5.4 || ^6.0",
-                "twig/twig": "^2.12.1 || ~3.0",
-                "zendframework/zend-modulemanager": "~2.2",
-                "zendframework/zend-servicemanager": "~2.2",
-                "zendframework/zend-view": "~2.2"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Cocur\\Slugify\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Florian Eckerstorfer",
-                    "email": "florian@eckerstorfer.co",
-                    "homepage": "https://florian.ec"
-                },
-                {
-                    "name": "Ivo Bathke",
-                    "email": "ivo.bathke@gmail.com"
-                }
-            ],
-            "description": "Converts a string into a slug.",
-            "keywords": [
-                "slug",
-                "slugify"
-            ],
-            "support": {
-                "issues": "https://github.com/cocur/slugify/issues",
-                "source": "https://github.com/cocur/slugify/tree/v4.5.0"
-            },
-            "time": "2023-09-16T10:10:53+00:00"
         },
         {
             "name": "codeguy/upload",
