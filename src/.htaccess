@@ -1,7 +1,7 @@
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(?!download-files)(.*)$ /index.php?route=$1 [L,QSA]
+RewriteRule ^(?!download-files)(.*)$ index.php?route=$1 [L,QSA]
 
 RewriteRule ^download-files/(.*)$ Services/Files/downloadFile.php?path=$1 [L,QSA]
 
