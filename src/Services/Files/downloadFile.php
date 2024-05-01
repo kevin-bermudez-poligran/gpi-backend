@@ -13,4 +13,6 @@
         echo "Can`t download this file";
     }
     
-?> 
+?> git@poligran-github:kevin-bermudez-poligran/gpi-frontend.git
+
+git remote add origin git@poligran-github:kevin-bermudez-poligran/gpi-backend.git

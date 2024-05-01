@@ -2,7 +2,8 @@
     use GpiPoligran\Api\Routes\System\{
         Healtcheck,
         Install,
-        Migrate
+        Migrate,
+        InstallIsRequired
     };
     use GpiPoligran\Config\Constants;
 
@@ -20,5 +21,10 @@
 
     $router->get("$prefix/migrate-db", function($req,$res){
         $routeHandler = new Migrate( $req,$res );
+        return $routeHandler->run();
+    });
+
+    $router->get("$prefix/install-is-required", function($req,$res){
+        $routeHandler = new InstallIsRequired( $req,$res );
         return $routeHandler->run();
     });
