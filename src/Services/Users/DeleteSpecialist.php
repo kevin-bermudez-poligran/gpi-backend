@@ -4,6 +4,7 @@ namespace GpiPoligran\Services\Users;
 
 use GpiPoligran\Config\ProfilesEnum;
 use GpiPoligran\Config\SpecialistStatusEnum;
+use GpiPoligran\Config\UserStatusEnum;
 use GpiPoligran\Exceptions\Service as ServiceError;
 use GpiPoligran\Models\{Specialist,User};
 
@@ -24,6 +25,7 @@ final class DeleteSpecialist{
                 throw new ServiceError( [],'User is not specialist',400 );
             }
 
+            User::where('id',$this->user)->update(['status' => UserStatusEnum::DELETED]);
             Specialist::where('specialist',$this->user)->update(['status' => SpecialistStatusEnum::DELETED]);
             return true;
         }

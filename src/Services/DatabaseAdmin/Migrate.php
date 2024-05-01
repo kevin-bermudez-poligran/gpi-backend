@@ -7,6 +7,7 @@ use GpiPoligran\Config\MedicalOrderStatusEnum;
 use GpiPoligran\Config\ProfilesEnum;
 use GpiPoligran\Config\SpecialistScheduleStatusEnum;
 use GpiPoligran\Config\SpecialistStatusEnum;
+use GpiPoligran\Config\UserStatusEnum;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Illuminate\Database\Capsule\Manager as DB;
 use GpiPoligran\Exceptions\{
@@ -79,6 +80,7 @@ final class Migrate{
                 $table->string('email',255);
                 $table->string('password',255);
                 $table->integer('profile')->default( ProfilesEnum::PATIENT );
+                $table->integer('status')->default( UserStatusEnum::ACTIVE );
                 $table->integer('identification_number')->nullable();
                
                 $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));

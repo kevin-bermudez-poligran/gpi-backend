@@ -23,7 +23,7 @@ final class DeleteSpecialist{
             // if($service->register()){
             //     throw new ServiceError( [],'Cannot delete specialists with assigned schedules');
             // }
-
+            echo $this->specialist;
             Specialist::find( $this->specialist )->delete();
             return true;
         }
