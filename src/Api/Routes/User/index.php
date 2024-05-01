@@ -5,7 +5,8 @@
         CreateManager,
         CreatePatient,
         CreateSpecialist,
-        DeleteSpecialist
+        DeleteSpecialist,
+        GetUsersByProfile
     };
     use GpiPoligran\Config\Constants;
 
@@ -38,5 +39,10 @@
 
     $router->delete("$prefix/specialist/:user", function($req,$res){
         $routeHandler = new DeleteSpecialist( $req,$res );
+        return $routeHandler->run();
+    });
+
+    $router->get("$prefix/:profile", function($req,$res){
+        $routeHandler = new GetUsersByProfile( $req,$res );
         return $routeHandler->run();
     });
