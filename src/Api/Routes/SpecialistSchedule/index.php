@@ -4,7 +4,8 @@ use GpiPoligran\Api\Routes\SpecialistSchedule\{
     CreateSpecialistSchedule,
     EditSpecialistSchedule,
     DeleteSpecialistSchedule,
-    GetSpecialistSchedulesBySpecialist
+    GetSpecialistSchedulesBySpecialist,
+    GetSpecialistSchedulesById
 };
 use GpiPoligran\Config\Constants;
 
@@ -27,5 +28,10 @@ $router->delete("$prefix/:specialist_schedule", function($req,$res){
 
 $router->get("$prefix/:specialist", function($req,$res){
     $routeHandler = new GetSpecialistSchedulesBySpecialist( $req,$res );
+    return $routeHandler->run();
+});
+
+$router->get("$prefix-by-id/:id", function($req,$res){
+    $routeHandler = new GetSpecialistSchedulesById( $req,$res );
     return $routeHandler->run();
 });
