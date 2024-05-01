@@ -9,6 +9,7 @@ use GpiPoligran\Services\Users\GetUser;
 use GpiPoligran\Models\User;
 use GpiPoligran\Utils\ManageHashingText;
 use GpiPoligran\Config\ProfilesEnum;
+use GpiPoligran\Config\UserStatusEnum;
 use GpiPoligran\Services\Specialists\CreateSpecialist;
 use GpiPoligran\Services\Specialties\GetSpecialty;
 
@@ -57,6 +58,7 @@ final class CreateUser{
             $userModel->name = $this->name;
             $userModel->email = $this->email;
             $userModel->password = ManageHashingText::generateHash( $this->rawPassword );
+            $userModel->status = UserStatusEnum::ACTIVE;
             $userModel->profile = $this->profile;
 
             if($this->identificationNumber !== null){
