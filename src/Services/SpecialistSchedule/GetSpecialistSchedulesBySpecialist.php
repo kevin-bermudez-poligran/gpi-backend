@@ -1,6 +1,8 @@
 <?php
 
 namespace GpiPoligran\Services\SpecialistSchedule;
+
+use GpiPoligran\Config\SpecialistScheduleStatusEnum;
 use GpiPoligran\Models\SpecialistSchedule;
 
 final class GetSpecialistSchedulesBySpecialist{
@@ -14,7 +16,7 @@ final class GetSpecialistSchedulesBySpecialist{
     }
 
     public function register(){
-        $specialistSchedules = SpecialistSchedule::where('specialist',$this->specialist);
+        $specialistSchedules = SpecialistSchedule::where('specialist',$this->specialist)->where('status','!=',SpecialistScheduleStatusEnum::DELETED);
      
         $specialistSchedules = $specialistSchedules->get()
                     ->toArray();        
