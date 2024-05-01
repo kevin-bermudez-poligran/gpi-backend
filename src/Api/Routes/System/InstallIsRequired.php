@@ -16,7 +16,10 @@
                 ] );    
             }
             catch(\Exception $error){
-                return $this->handlerException( $error );
+                return $this->sendResponse( 200,'Install is required',[
+                    'install_is_required' => true
+                ] ); 
+                // return $this->handlerException( $error );
             }
         }
     }
