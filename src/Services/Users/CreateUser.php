@@ -44,11 +44,13 @@ final class CreateUser{
                 $this->rawPassword = $this->identificationNumber;
             }
 
-            $userService = new GetUser( $this->email );
-            $user = $userService->register();
+            if(strlen($this->email)){
+                $userService = new GetUser( $this->email );
+                $user = $userService->register();
 
-            if($user){
-                throw new ServiceError([],'User already exists',400);
+                if($user){
+                    throw new ServiceError([],'User already exists',400);
+                }
             }
 
             $userModel = new User();

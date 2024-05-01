@@ -76,7 +76,7 @@ final class Migrate{
             Capsule::schema()->create('users',function($table){
                 $table->increments('id');
                 $table->string('name',255);
-                $table->string('email',255)->unique();
+                $table->string('email',255);
                 $table->string('password',255);
                 $table->integer('profile')->default( ProfilesEnum::PATIENT );
                 $table->integer('identification_number')->nullable();
